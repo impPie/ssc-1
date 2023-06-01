@@ -13,6 +13,10 @@ import json
 from os import listdir
 from utils.parameterSetup import ParameterSetup
 from _3train.classifierTrainer import trainClassifier
+import torch, gc
+
+gc.collect()
+torch.cuda.empty_cache()
 
 start_time = time.time()
 args = sys.argv

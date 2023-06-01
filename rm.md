@@ -24,7 +24,8 @@ A new classifier can be trained and validated by the following procedure:
 ``` 
 python readOfflineEEGandStageLabels2pickle.py WAVEDIR
 python extractFeatures.py
-python trainClassifier.py -p sixFilesNo1 / python trainClassifier.py -r 1 
+python trainClassifier.py
+<!-- python trainClassifier.py -p sixFilesNo1 / python trainClassifier.py -r 1  -->
 python ezTest.py
 ```
 ## readOfflineEEGandStageLabels2pickle.py 
