@@ -1,0 +1,12 @@
+torch 
+mne
+numpy
+pytorch-ignite 
+torchsummary 
+pyserial 
+PyQt5 
+tqdm 
+scipy
+serial
+matplotlib
+scikit-learn
