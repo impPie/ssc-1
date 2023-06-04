@@ -549,7 +549,7 @@ class DeepClassifier():
           # print('oneHots.shape = ' + str(oneHots.shape))
           scalar_labels = np.array([np.where(item == 1)[0][0] for item in oneHots])
           # [print('oneHot = ' + str(oneHot)) for oneHot in oneHots]
-
+          
           #---------
           # Train the Model.
           # print('starts training in fit():')
