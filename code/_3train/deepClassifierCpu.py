@@ -395,7 +395,8 @@ class DeepClassifier():
         # self.deep_skipConnectionLayerNum = self.paramsForNetworkStructure.deep_skipConnectionLayerNum
         # self.stageLabels4evaluation = paramsForNetworkStructure.stageLabels4evaluation
         self.best_accuracy = 0
-        self.device_str = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.device_str = 'cpu'
+        # self.device_str = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.device = torch.device(self.device_str)
         if paramsForNetworkStructure.torch_loss_function == 'mfe':
             criterion = MFE_Loss()
@@ -439,10 +440,10 @@ class DeepClassifier():
     def fit(self, model, optimizer, train_loader, val_loader, epochs, batch_size):
         print('starting fit()')
         # self.criterion = nn.CrossEntropyLoss()
-        if torch.cuda.is_available():
-            # print('using model.cuda()')
-            torch.cuda.device(self.device)
-            model.cuda()
+        # if torch.cuda.is_available():
+        #     # print('using model.cuda()')
+        #     torch.cuda.device(self.device)
+        #     model.cuda()
 
         ### print('$%$%$%$ in fit(), calling summary() with model.input_shape =', model.input_shape)
         # summary(model, model.input_shape, device=self.device_str)
@@ -549,7 +550,7 @@ class DeepClassifier():
           # print('oneHots.shape = ' + str(oneHots.shape))
           scalar_labels = np.array([np.where(item == 1)[0][0] for item in oneHots])
           # [print('oneHot = ' + str(oneHot)) for oneHot in oneHots]
-          
+
           #---------
           # Train the Model.
           # print('starts training in fit():')
@@ -627,15 +628,16 @@ class DeepClassifier():
           if validationRatio > 0:
               del val_data
               del val_data_with_labels
-          torch.cuda.empty_cache()
+        #   torch.cuda.empty_cache()
+    
 
     def load_weights(self, weight_path):
         print('loading weights in deepClassifier.py from', weight_path)
         self.model = self.generateModel()
-        if torch.cuda.is_available():
-            self.model.load_state_dict(torch.load(weight_path))
-        else:
-            self.model.load_state_dict(torch.load(weight_path, map_location='cpu'))
+        # if torch.cuda.is_available():
+        #     self.model.load_state_dict(torch.load(weight_path))
+        # else:
+        self.model.load_state_dict(torch.load(weight_path, map_location='cpu'))
 
     #-----------------------
     def predict(self, featuresBySamples):
