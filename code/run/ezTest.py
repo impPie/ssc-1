@@ -30,11 +30,8 @@ class EzT:
         self.extractorType = params.extractorType
         self.classifierType = params.classifierType
         self.postDir = params.postDir
-        # self.predDir = params.predDir
         self.classLabels = params.sampleClassLabels[:params.maximumStageNum]
         self.predictionState=1
-        # observed_samplingFreq = params.samplingFreq
-        # observed_epochTime = params.windowSizeInSec
 
         finalClassifierDir = params.finalClassifierDir
         
@@ -43,7 +40,6 @@ class EzT:
                     for line in f:
                         classifierID, classifierType, samplingFreq, epochTime = [elem.strip() for elem in line.split(',')]
                         print(classifierID, ',', classifierType, ',', samplingFreq, ',', epochTime)
-                        # classifierMetadataList.append((classifierID, classifierType, int(samplingFreq), int(epochTime)))
 
         paramFileName = 'params.' + str(classifierID) + '.json'
 
