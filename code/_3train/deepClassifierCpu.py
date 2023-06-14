@@ -471,7 +471,7 @@ class DeepClassifier():
         logPath = "../../data/tLog/"
         if not os.path.exists(logPath):
             os.makedirs(logPath)
-        logPath = logPath+"trainLog.txt"
+        logPath = logPath+"trainLog"
         @trainer.on(Events.EPOCH_COMPLETED)
         def log_training_results(trainer):
             

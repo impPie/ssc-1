@@ -2,6 +2,7 @@ from __future__ import print_function
 # import sys
 # sys.path.insert(1,'..')
 # from os import listdir
+import os
 import pickle
 import numpy as np
 import string
@@ -97,7 +98,16 @@ def connectSamplesAndTrain(params, fileTripletL, stage_restriction, paramID=0):
     # print('before calling findClassifier. params.networkType =', params.networkType)
     classifierID = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
     params.writeAllParams(params.classifierDir, classifierID)
-    
+    #write ID
+    logPath = "../../data/tLog/"
+    if not os.path.exists(logPath):
+        os.makedirs(logPath)
+    logPath = logPath+"trainLog"
+    lgP = open(logPath,"a")
+    lgP.writelines(["\n# ClassifierID: {}  "
+            .format(classifierID)])
+    lgP.close()
+
     writeTrainFileIDsUsedForTraining(params, classifierID, fileTripletL)
     classifier = findClassifier(params, paramID, classLabels, classifierID)
     classifier.train(x_train, y_train)
