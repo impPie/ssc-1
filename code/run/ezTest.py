@@ -61,23 +61,24 @@ class EzT:
             timeStampSegment=[]
             #------------------------------------------------
             #------------------------------------------------
+           
+            f_path = finalClassifierDir + '/files_used_for_training.' + str(classifierID) + '.csv'
+            trFL=[]
             beeg=[]
-            stageSeq=[]
-            with open("../../data/pickled/eegAndStage.D_Hf_l_No7.pkl","rb") as dataFileHandler:
-            # with open("../../handler/data/pickled/eegAndStage.All_L.pkl","rb") as dataFileHandler:
-            # with open("../../data/pickled ori/eegAndStage.sixFilesNo1.pkl","rb") as dataFileHandler:
-            # with open("../../data/pickled del/eegAndStage.No_Hf_l_sixFilesNo1.pkl","rb") as dataFileHandler:
-                (eeg, emg, stage, timeStamps) = pickle.load(dataFileHandler)
-                beeg=np.append(beeg,eeg)
-                stageSeq=np.append(stageSeq,stage)
-            with open("../../data/pickled/eegAndStage.D_Hf_l_No8.pkl","rb") as dataFileHandler:
-                (eeg, emg, stage, timeStamps) = pickle.load(dataFileHandler)
-                beeg=np.append(beeg,eeg)
-                stageSeq=np.append(stageSeq,stage)
-
-
-            beeg=beeg.reshape(-1,512)
-            # eegSegment = self.one_record[:, 0]
+            bstg=[]
+            with open(f_path) as testF:
+                for l in testF:
+                    ef,ff,fId = [elem.strip() for elem in l.split(',')]
+                    trFL.append(ef)
+            testDataP="../../data/pickled"
+            for fn in listdir(testDataP):
+                if fn.startswith("eegAndStage") and fn not in trFL:
+                    with open(testDataP+'/'+fn,"rb") as dataFileHandler:
+                        (eeg, emg, stageSeq, timeStamps) = pickle.load(dataFileHandler)
+                        beeg.append(eeg)
+                        bstg.append(stageSeq)
+            beeg=np.array(beeg).reshape(-1,512)
+         
             for eegSegment in beeg:
                 if self.predictionState:
 
@@ -104,14 +105,14 @@ class EzT:
             # print("Finish predicting--- %s minutes ---" % (int(time.time() - start_time)/60))
 
             #Record
-            # with open("../../results/{}_predictOnDel.pickle".format(classifierID), 'wb') as out_path:
+            with open("../../results/{}_predictOnDel.pickle".format(classifierID), 'wb') as out_path:
             # with open("../../results/predictlabels/{}_predict.pickle".format(classifierID), 'wb') as out_path:
-            #      pickle.dump(self.y_pred_L,out_path)
-            # out_path.close()
+                 pickle.dump(self.y_pred_L,out_path)
+            out_path.close()
             
             y_pred = [x.upper() if x!= "n" else "S" for x in self.y_pred_L]
             y_pred = np.array(y_pred[11:])
-            y_test = np.array(stageSeq[11:])
+            y_test = np.array(bstg[11:])
 
             (stageLabels, sensitivity, specificity, accuracy, precision, f1score) = y2sensitivity(y_test, y_pred)
             (stageLabels4confusionMat, confusionMat) = y2confusionMat(y_test, y_pred, params.stageLabels4evaluation)
@@ -147,7 +148,4 @@ if __name__ == '__main__':
     mainapp.start()
     # print(datetime.datetime.now())
     print("--- %s minutes ---" % (int(time.time() - start_time)/60))
-    # while True:
-    # print('*')
-    # time.sleep(5)
-    # sys.exit(app.exec_())
+ 

@@ -73,12 +73,14 @@ class EzT:
                             ef,ff,fId = [elem.strip() for elem in l.split(',')]
                             trFL.append(ef)
                     for fn in listdir(finalClassifierDir):
-                        if fn.startwith("eegAndStage") and fn not in trFL:
+                        if fn.startswith("eegAndStage") and fn not in trFL:
                             with open(finalClassifierDir+'/'+fn,"rb") as dataFileHandler:
                                 (eeg, emg, stageSeq, timeStamps) = pickle.load(dataFileHandler)
                                 beeg.append(eeg)
                                 bstg.append(stageSeq)
-                    beeg=beeg.reshape(-1,512)
+                    # beeg=beeg.reshape(-1,512)
+                    beeg=np.array(beeg).reshape(-1,512)
+
                     # eegSegment = self.one_record[:, 0]
                     for eegSegment in beeg:
                         if self.predictionState:

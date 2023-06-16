@@ -226,12 +226,12 @@ def getEEGAndFeatureFiles(params, testNum, offset, randomize):
     return train_fileTripletL, test_fileTripletL
 
 
-def crossFoldsEEGAndFeatureFiles(params,testNum,total):
+def crossFoldsEEGAndFeatureFiles(params,testNum,n_fold=5):
     eegAndStageFiles = getAllEEGFiles(params)
     # testNum = 1
     train_fileTripletL = []
     test_fileTripletL = []
-    for offset in range(total):
+    for offset in range(n_fold):
         train_eegAndStageFiles, test_eegAndStageFiles = listSplit(
             eegAndStageFiles, testNum, offset, randomize=0)
         # print('train_eegAndStageFiles =', train_eegAndStageFiles)
