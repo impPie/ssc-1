@@ -77,7 +77,9 @@ class EzT:
                         (eeg, emg, stageSeq, timeStamps) = pickle.load(dataFileHandler)
                         beeg.append(eeg)
                         bstg.append(stageSeq)
-            beeg=np.array(beeg).reshape(-1,512)
+            beeg=np.reshape(beeg,(-1,512))
+            bstg=np.reshape(bstg,(-1))
+
          
             for eegSegment in beeg:
                 if self.predictionState:

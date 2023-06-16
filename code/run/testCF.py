@@ -80,6 +80,7 @@ class EzT:
                                 bstg.append(stageSeq)
                     # beeg=beeg.reshape(-1,512)
                     beeg=np.array(beeg).reshape(-1,512)
+                    bstg=np.reshape(bstg,(-1))
 
                     # eegSegment = self.one_record[:, 0]
                     for eegSegment in beeg:
