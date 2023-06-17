@@ -122,7 +122,7 @@ def trainClassifier(params, outputDir, optionType, optionVals):
     #  '5fold cross vertification':
     if optionType == '-cf' or optionType == '':
 
-        train_fileTripletL, test_fileTripletL = crossFoldsEEGAndFeatureFiles(params,testNum=91)
+        train_fileTripletL, test_fileTripletL = crossFoldsEEGAndFeatureFiles(params,trainNum=9)
         for i in range(len(test_fileTripletL)):
             if len(train_fileTripletL[i]) > 0:
                 def stage_restriction(orig_stageSeq):

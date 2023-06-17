@@ -37,16 +37,13 @@ class EzT:
         
         classifierTypeFileName = 'classifierTypes.csv'
         with open(finalClassifierDir + '/' + classifierTypeFileName) as f:
-                    for line in f:
-                        classifierID, classifierType, samplingFreq, epochTime = [elem.strip() for elem in line.split(',')]
-                        print(classifierID, ',', classifierType, ',', samplingFreq, ',', epochTime)
+            line = f.readline()
+            classifierID, classifierType, samplingFreq, epochTime = [elem.strip() for elem in line.split(',')]
+            print(classifierID, ',', classifierType, ',', samplingFreq, ',', epochTime)
 
         paramFileName = 'params.' + str(classifierID) + '.json'
-
         paramsForNetworkStructure = ParameterSetup(paramDir=finalClassifierDir, paramFileName=paramFileName)
-
-        self.extractor = FeatureExtractorRawDataWithSTFT()
-        
+        self.extractor = FeatureExtractorRawDataWithSTFT()       
         self.y_pred_L=[]
         
         try: 
@@ -107,7 +104,7 @@ class EzT:
             # print("Finish predicting--- %s minutes ---" % (int(time.time() - start_time)/60))
 
             #Record
-            with open("../../results/{}_predictOnDel.pickle".format(classifierID), 'wb') as out_path:
+            with open("../../results/{}_predict.pickle".format(classifierID), 'wb') as out_path:
             # with open("../../results/predictlabels/{}_predict.pickle".format(classifierID), 'wb') as out_path:
                  pickle.dump(self.y_pred_L,out_path)
             out_path.close()
