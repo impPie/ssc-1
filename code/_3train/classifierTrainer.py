@@ -8,6 +8,8 @@ import numpy as np
 import string
 import random
 from utils.fileManagement import getEEGAndFeatureFiles, findClassifier, writeTrainFileIDsUsedForTraining, getEEGAndFeatureFilesByClassifierID, getEEGAndFeatureFilesByExcludingFromTrainingByPrefix, getEEGAndFeatureFilesByExcludingTestMouseIDs,crossFoldsEEGAndFeatureFiles
+import torch, gc
+
 
 #-----------------------
 def extract(featureFilePath, stageFilePath):
@@ -124,6 +126,8 @@ def trainClassifier(params, outputDir, optionType, optionVals):
 
         train_fileTripletL, test_fileTripletL = crossFoldsEEGAndFeatureFiles(params,trainNum=9)
         for i in range(len(test_fileTripletL)):
+            gc.collect()
+            torch.cuda.empty_cache()
             if len(train_fileTripletL[i]) > 0:
                 def stage_restriction(orig_stageSeq):
                     return orig_stageSeq
