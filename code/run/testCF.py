@@ -71,10 +71,11 @@ class EzT:
                     with open(f_path) as testF:
                         for l in testF:
                             ef,ff,fId = [elem.strip() for elem in l.split(',')]
-                            trFL.append(ef)
-                    for fn in listdir(finalClassifierDir):
+                            trFL.append(ef.replace("DhL","Ori"))
+                    eegStgDir = "../../data/Ori100"
+                    for fn in listdir(eegStgDir):
                         if fn.startswith("eegAndStage") and fn not in trFL:
-                            with open(finalClassifierDir+'/'+fn,"rb") as dataFileHandler:
+                            with open(eegStgDir+'/'+fn,"rb") as dataFileHandler:
                                 (eeg, emg, stageSeq, timeStamps) = pickle.load(dataFileHandler)
                                 beeg.append(eeg)
                                 bstg.append(stageSeq)
@@ -109,9 +110,9 @@ class EzT:
                     
 
                     #Record
-                    # with open("../../results/predictlabels/{}_predict.pickle".format(classifierID), 'wb') as out_path:
-                    #      pickle.dump(self.y_pred_L,out_path)
-                    # out_path.close()
+                    with open("../../results/predictlabelsDel/{}_predict.pickle".format(classifierID), 'wb') as out_path:
+                         pickle.dump(self.y_pred_L,out_path)
+                    out_path.close()
                     
                     y_pred = [x.upper() if x!= "n" else "S" for x in self.y_pred_L]
                     y_pred = np.array(y_pred[11:])
