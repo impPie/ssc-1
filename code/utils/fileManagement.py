@@ -226,14 +226,34 @@ def getEEGAndFeatureFiles(params, testNum, offset, randomize):
     return train_fileTripletL, test_fileTripletL
 
 
-def crossFoldsEEGAndFeatureFiles(params,trainNum,n_fold=11):
+# def crossFoldsEEGAndFeatureFiles(params,trainNum,n_fold=10):
+#     eegAndStageFiles = getAllEEGFiles(params)
+#     # testNum = 1
+#     train_fileTripletL = []
+#     test_fileTripletL = []
+#     for offset in range(n_fold):
+#         test_eegAndStageFiles,train_eegAndStageFiles  =   listSplit(
+#             eegAndStageFiles, trainNum, offset*9,randomize=0)
+#         # print('train_eegAndStageFiles =', train_eegAndStageFiles)
+#         train_fileIDs, test_fileIDs = list(
+#             map(fileIDsFromEEGFiles, (train_eegAndStageFiles, test_eegAndStageFiles)))
+#         train_featureFiles, test_featureFiles = list(map(
+#             lambda fileIDs: getFeatureFiles(params, fileIDs), (train_fileIDs, test_fileIDs)))
+
+#         train_fileTripletL.append(list(sortAndMerge(
+#             train_eegAndStageFiles, train_featureFiles, train_fileIDs)))
+#         test_fileTripletL.append(list(sortAndMerge(
+#             test_eegAndStageFiles, test_featureFiles, test_fileIDs)))
+    
+#     return train_fileTripletL, test_fileTripletL
+def crossFoldsEEGAndFeatureFiles(params,trainNum,n_fold=10):
     eegAndStageFiles = getAllEEGFiles(params)
     # testNum = 1
     train_fileTripletL = []
     test_fileTripletL = []
     for offset in range(n_fold):
-        test_eegAndStageFiles,train_eegAndStageFiles  = listSplit(
-            eegAndStageFiles, trainNum, offset*9,randomize=0)
+        offset=(offset+1)*9
+        test_eegAndStageFiles,train_eegAndStageFiles  = eegAndStageFiles[:offset] + eegAndStageFiles[(offset+trainNum):], eegAndStageFiles[offset:(offset+trainNum)] 
         # print('train_eegAndStageFiles =', train_eegAndStageFiles)
         train_fileIDs, test_fileIDs = list(
             map(fileIDsFromEEGFiles, (train_eegAndStageFiles, test_eegAndStageFiles)))
