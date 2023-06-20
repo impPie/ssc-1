@@ -33,7 +33,7 @@ class EzT:
         self.classLabels = params.sampleClassLabels[:params.maximumStageNum]
         self.predictionState=1
 
-        finalClassifierDir = params.eegDir
+        finalClassifierDir = params.finalClassifierDir
 
         # finalClassifierDir = params.finalClassifierDir
         
@@ -110,7 +110,7 @@ class EzT:
                     
 
                     #Record
-                    with open("../../results/predictlabelsDel/{}_predict.pickle".format(classifierID), 'wb') as out_path:
+                    with open("../../results/predictlabels/{}_predict.pickle".format(classifierID), 'wb') as out_path:
                          pickle.dump(self.y_pred_L,out_path)
                     out_path.close()
                     
