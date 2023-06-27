@@ -60,6 +60,7 @@ def printConfusionMat(stageLabels, confusionMat):
     cm = []
     for labelID4test in range(labelNum):
         label4test = stageLabels[labelID4test]
+        cm.append('\n')
         for labelID4pred in range(labelNum):
             label4pred = stageLabels[labelID4pred]
             print('  ' + label4test + '->' + label4pred + ': ' + str(confusionMat[labelID4test, labelID4pred]) + '\t', end='')
