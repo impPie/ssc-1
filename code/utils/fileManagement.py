@@ -252,7 +252,7 @@ def crossFoldsEEGAndFeatureFiles(params,trainNum,n_fold=10):
     train_fileTripletL = []
     test_fileTripletL = []
     for offset in range(n_fold):
-        offset=(offset+1)*9
+        offset=(offset+1)*trainNum
         test_eegAndStageFiles,train_eegAndStageFiles  = eegAndStageFiles[:offset] + eegAndStageFiles[(offset+trainNum):], eegAndStageFiles[offset:(offset+trainNum)] 
         # print('train_eegAndStageFiles =', train_eegAndStageFiles)
         train_fileIDs, test_fileIDs = list(

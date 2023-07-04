@@ -124,7 +124,7 @@ def trainClassifier(params, outputDir, optionType, optionVals):
     #  '5fold cross vertification':
     if optionType == '-cf' or optionType == '':
 
-        train_fileTripletL, test_fileTripletL = crossFoldsEEGAndFeatureFiles(params,trainNum=9)
+        train_fileTripletL, test_fileTripletL = crossFoldsEEGAndFeatureFiles(params,trainNum=10)
         for i in range(len(test_fileTripletL)):
             gc.collect()
             torch.cuda.empty_cache()
