@@ -71,7 +71,8 @@ class EzT:
                     with open(f_path) as testF:
                         for l in testF:
                             ef,ff,fId = [elem.strip() for elem in l.split(',')]
-                            trFL.append(ef.replace("BLT","Ori"))
+                            three = ef.split(".")[1][:3]
+                            trFL.append(ef.replace(three,"Ori"))
                     eegStgDir = "../../data/Ori100"
                     for fn in listdir(eegStgDir):
                         if fn.startswith("eegAndStage") and fn not in trFL:
