@@ -109,7 +109,10 @@ def selectClassifierID(finalClassifierDir, requested_classifierType, requested_s
 #--------------------------------------------
 # write names of files used for training the classifier
 def writeTrainFileIDsUsedForTraining(params, classifierID, fileTripletL):
-    f = open(params.classifierDir + '/files_used_for_training.' + classifierID + '.csv', 'w')
+    f = open(params.classifierDir +'finalclassifier/'+ 'classifierTypes' + '.csv', 'w')
+    f.write("{}, UTSN-L, 128, 4\n".format(classifierID))
+    f.close()
+    f = open(params.classifierDir+'finalclassifier/' + '/files_used_for_training.' + classifierID + '.csv', 'w')
     for trip in fileTripletL:
         f.write(str(trip[0]) + ',' + trip[1] + ',' + trip[2] + '\n')
     f.close()

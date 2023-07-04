@@ -1,6 +1,7 @@
 from __future__ import print_function
 from utils.freqAnalysisTools import band
 import json
+import os
 import numpy as np
 
 class ParameterSetup(object):
@@ -322,7 +323,10 @@ class ParameterSetup(object):
         # fileHandler = open(outputPath, 'w')
         # for key in self.__dict__:
             # fileHandler.write(key + ' : ' + str(self.__dict__[key]) + '\n')
-        backupPath = outputDir + '/params.' + classifierID + '.json'
+        gPath = outputDir+'/finalclassifier'
+        if not os.path.exists(gPath):
+            os.makedirs(gPath)
+        backupPath = gPath + '/params.' + classifierID + '.json'
         print('copying params.json to', backupPath)
         with open(backupPath, 'w') as backupFileHandler:
             self.parameterFileHandler.seek(0)

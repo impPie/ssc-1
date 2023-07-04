@@ -379,7 +379,7 @@ class DeepClassifier():
         self.paramsForDirectorySetup = paramsForDirectorySetup
         self.paramsForNetworkStructure = paramsForNetworkStructure
         self.weight_dir = paramsForDirectorySetup.pickledDir
-        self.weight_path_best = self.weight_dir + '/weights.' + classifierID + '.pkl'
+        self.weight_path_best = self.weight_dir + '/finalclassifier'+'/weights.' + classifierID + '.pkl'
         self.maximumStageNum = paramsForNetworkStructure.maximumStageNum
         self.stageLabel2stageID = paramsForNetworkStructure.stageLabel2stageID
         # self.model_checkpoint_path = self.weight_dir + '/checkpoint.h5'
